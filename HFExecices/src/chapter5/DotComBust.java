@@ -12,17 +12,21 @@ public class DotComBust {
 
 	
 	private static void sinkDotCom() {
-		ArrayList<String> locations = new ArrayList<String>();
-		DotComShip shipGoto = new DotComShip("Go2.com");
-		DotComShip shipPets = new DotComShip("Pets.com");
-		DotComShip shipAskMe = new DotComShip("AskMe.com"); 
 		
+		ArrayList<DotCom> targetShips = new ArrayList<DotCom>();
+		targetShips.add(new DotCom("Go2.com"));
+		targetShips.add(new DotCom("Pets.com"));
+		targetShips.add(new DotCom("AskMe.com")); 
+		
+		ArrayList<String> locations = new ArrayList<String>();
 		int numOfGuesses = 0;
 		GameHelper helper = new GameHelper();
 		
+		helper.printGrid(targetShips, "0123456", "ABCDEFG");
+		
 		boolean isAlive = true;
 		while (isAlive) {
-			String guess = helper.getUserInput("Enter a position [A-G][0-6]");
+			//String guess = helper.getUserInput("Enter a position [A-G][0-6]");
 			
 			
 			
@@ -80,55 +84,7 @@ public class DotComBust {
 }
 
 
-class DotComShip {
-	private String name;
-	private ArrayList<String> postions;
-	
-	
-	public String getName() {
-		return name;
-	}
 
-	public ArrayList<String> getPostions() {
-		return postions;
-	}
-
-	public DotComShip(String name) {
-		super();
-		this.name = name;
-		this.postions = randomPositions();
-	}
-
-	private ArrayList<String> randomPositions() {
-		String verticalAxis = "ABCDEFG";
-		ArrayList<String> locs = new ArrayList<String>();
-		int randomDirection, randomY, randomX;
-		randomDirection = (int) (Math.random() * 2); // 0 1
-		if (randomDirection == 1) { // Vertical
-			randomY = (int) (Math.random() * 5);	// 0 1 2 3 4 == A B C D E
-			randomX = (int) (Math.random() * 7);	// 0 - 6
-			locs.add(verticalAxis.charAt(randomX) + String.valueOf(randomX));
-			locs.add(verticalAxis.charAt(randomX + 1) + String.valueOf(randomX));
-			locs.add(verticalAxis.charAt(randomX + 2) + String.valueOf(randomX));
-		} else { // Horizontal
-			randomX = (int) (Math.random() * 5);	// 0 1 2 3 4 == A B C D E
-			randomY = (int) (Math.random() * 7);	// 0 - 6
-			locs.add(verticalAxis.charAt(randomY) + String.valueOf(randomX));
-			locs.add(verticalAxis.charAt(randomY) + String.valueOf(randomX + 1));
-			locs.add(verticalAxis.charAt(randomY) + String.valueOf(randomX + 2));
-		}
-		return locs;
-	}
-	
-	public boolean removePositionAt(String element) {
-		if (postions.isEmpty()) return false;
-		return postions.removeIf(pos -> pos.equals(element));
-	}
-	
-	public String toString() {
-		return String.join(", ", postions);
-	}
-}
 
 /*
 class DotCom {
